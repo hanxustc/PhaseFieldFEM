@@ -21,11 +21,12 @@ make -j 28  # -> quad_test-opt
 
 ## Example
 
+The initial orientation field is read from `poly.data`.
+
 ```bash
 cd examples
-mpiexec -n 48 ../../quad_test-opt -i test.i
+mpiexec -n 48 ../quad_test-opt -i test.i
 ```
-The initial orientation field is read from `poly.data`.
 
 ## Automatic differentiation
 
