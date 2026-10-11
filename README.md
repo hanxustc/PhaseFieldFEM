@@ -16,6 +16,7 @@ The time derivative uses the standard MOOSE kernels `ADTimeDerivative` and `Time
 
 ```bash
 conda activate moose
+export MOOSE_DIR=/path/to/moose
 make -j 28  # -> quad_test-opt
 ```
 
