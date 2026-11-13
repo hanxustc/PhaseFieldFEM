@@ -82,8 +82,10 @@ Functions::computeQpProperties()
   Real u = 1.0;
   Real du = 0.0;
   if (dtheta > eps) {
-    u = (_theta[_qp] - _thetaM[_qp]) / dtheta;
-    du = 1.0 / dtheta;
+    Real u_raw = (_theta[_qp] - _thetaM[_qp]) / dtheta;
+    u = std::max(0.0, std::min(1.0, u_raw));
+    if (u_raw > 0.0 && u_raw < 1.0)
+      du = 1.0 / dtheta;
   }
 
   // psi = arctan(grad_theta_y / grad_theta_x)

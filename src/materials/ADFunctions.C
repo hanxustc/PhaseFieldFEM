@@ -69,7 +69,7 @@ ADFunctions::computeQpProperties()
   Real dtheta = _thetaP[_qp] - _thetaM[_qp];
   ADReal u = 1.0;
   if (dtheta > eps)
-    u = (_theta[_qp] - _thetaM[_qp]) / dtheta;
+    u = std::max(0.0, std::min(1.0, (_theta[_qp] - _thetaM[_qp]) / dtheta));
 
   // ψ = arctan(grad_theta_y / grad_theta_x)
   _psi[_qp] = 0.0;
