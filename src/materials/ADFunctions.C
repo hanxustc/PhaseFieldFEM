@@ -69,9 +69,9 @@ ADFunctions::computeQpProperties()
   Real dtheta = _thetaP[_qp] - _thetaM[_qp];
   ADReal u = 1.0;
   if (dtheta > eps)
-    u = std::max(0.0, std::min(1.0, (_theta[_qp] - _thetaM[_qp]) / dtheta));
+    u = (_theta[_qp] - _thetaM[_qp]) / dtheta;
 
-  // psi = arctan(grad_theta_y / grad_theta_x)
+  // ψ = arctan(grad_theta_y / grad_theta_x)
   _psi[_qp] = 0.0;
   if (_grad_theta[_qp].norm() > _u0)
     _psi[_qp] = std::atan2(_grad_theta[_qp](1), _grad_theta[_qp](0));
@@ -114,8 +114,8 @@ ADFunctions::computeQpProperties()
                  / _grad_theta[_qp].norm();
 
   // Double-well potential
-  _c[_qp] = pow(u, 2) * pow(1 - u, 2);
-  _dc[_qp] = 2 * u * (1 - 3*u + 2*pow(u, 2)) / (dtheta + eps);
+  _c[_qp] = pow(u, 2) * pow(1 - u, 2) * pow(dtheta, 4) / pow(pow(dtheta, 2) + eps, 2);
+  _dc[_qp] = 2 * u * (1 - 3*u + 2*pow(u, 2)) * pow(dtheta, 3) / pow(pow(dtheta, 2) + eps, 2);
 
   // Energy density
   Real coeff = 0.0;

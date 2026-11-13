@@ -82,10 +82,8 @@ Functions::computeQpProperties()
   Real u = 1.0;
   Real du = 0.0;
   if (dtheta > eps) {
-    Real u_raw = (_theta[_qp] - _thetaM[_qp]) / dtheta;
-    u = std::max(0.0, std::min(1.0, u_raw));
-    if (u_raw > 0.0 && u_raw < 1.0)
-      du = 1.0 / dtheta;
+    u = (_theta[_qp] - _thetaM[_qp]) / dtheta;
+    du = 1.0 / dtheta;
   }
 
   // psi = arctan(grad_theta_y / grad_theta_x)
@@ -153,9 +151,9 @@ Functions::computeQpProperties()
   }
 
   // Double-well potential
-  _c[_qp] = pow(u, 2) * pow(1 - u, 2);
-  _dc[_qp] = 2 * u * (1 - 3*u + 2*pow(u, 2)) / (dtheta + eps);
-  _d2c[_qp] = (2 - 12*u + 12*pow(u, 2)) / (dtheta + eps) * du;
+  _c[_qp] = pow(u, 2) * pow(1 - u, 2) * pow(dtheta, 4) / pow(pow(dtheta, 2) + eps, 2);
+  _dc[_qp] = 2 * u * (1 - 3*u + 2*pow(u, 2)) * pow(dtheta, 3) / pow(pow(dtheta, 2) + eps, 2);
+  _d2c[_qp] = (2 - 12*u + 12*pow(u, 2)) * pow(dtheta, 3) / pow(pow(dtheta, 2) + eps, 2) * du;
 
   // Energy density
   Real coeff = 0.0;
