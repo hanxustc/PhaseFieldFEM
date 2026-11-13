@@ -151,7 +151,7 @@ Functions::computeQpProperties()
   }
 
   // Double-well potential
-  _c[_qp] = pow(u, 2) * pow(1 - u, 2) * pow(dtheta, 4) / pow(pow(dtheta, 2) + eps, 2);
+  _c[_qp] = pow(u, 2) * pow(1 - u, 2);
   _dc[_qp] = 2 * u * (1 - 3*u + 2*pow(u, 2)) * pow(dtheta, 3) / pow(pow(dtheta, 2) + eps, 2);
   _d2c[_qp] = (2 - 12*u + 12*pow(u, 2)) * pow(dtheta, 3) / pow(pow(dtheta, 2) + eps, 2) * du;
 
